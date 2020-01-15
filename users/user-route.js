@@ -11,11 +11,11 @@ router.get("/", restricted, (req, res) => {
         .catch(err => res.status(400).json(err))
 })
 
-router.post("/register", (req, res) => {
+router.post("/register", validateFields, (req, res) => {
 
 })
 
-router.post("/login", (req, res) => {
+router.post("/login", validateFields, (req, res) => {
     let { username, password } = req.body;
 
 
@@ -55,7 +55,12 @@ function restricted(req, res, next) {
   }
 
   function validateFields(req, res, next){
-      
+    let { username, password } = req.body || req.headers;
+    if(!username || !password){
+      res.status(400).json({error: "Request needs username and passwords"})
+    } else {
+      next();
+    }
   }
 
 module.exports = router;
