@@ -5,7 +5,7 @@ const router = express.Router();
 
 const Users = require("./user-model");
 
-router.get("/",  (req, res) => {
+router.get("/", restricted, (req, res) => {
     Users.getUsers()
         .then(users => res.status(200).json(users))
         .catch(err => res.status(400).json(err))
@@ -37,7 +37,7 @@ function restricted(req, res, next) {
     const { username, password } = req.headers;
   
     if (username && password) {
-      Users.findBy({ username })
+      Users.findBy({username})
         .first()
         .then(user => {
           if (user && bcrypt.compareSync(password, user.password)) {
