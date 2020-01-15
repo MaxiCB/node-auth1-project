@@ -4,8 +4,7 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 
 const Users = require("./user-model");
-const { restricted,
-  validateFields } = require("../middleware/user-middleware")
+const { restricted, validateFields } = require("../middleware/user-middleware");
 
 router.get("/", restricted, (req, res) => {
   Users.getUsers()
