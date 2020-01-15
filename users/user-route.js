@@ -12,7 +12,11 @@ router.get("/", restricted, (req, res) => {
 })
 
 router.post("/register", validateFields, (req, res) => {
+  let user = req.body;
 
+  Users.registerUser(user)
+    .then(user => res.status(201).json(user))
+    .catch(err => res.status(400).json(err))
 })
 
 router.post("/login", validateFields, (req, res) => {
