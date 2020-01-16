@@ -23,7 +23,7 @@ function restricted(req, res, next) {
 }
 
 function validateFields(req, res, next) {
-  let { username, password } = req.body || req.headers;
+  let { username, password } = req.headers;
   if (!username || !password) {
     res.status(400).json({ error: "Request needs username and passwords" });
   } else {
@@ -31,7 +31,16 @@ function validateFields(req, res, next) {
   }
 }
 
+function protected(req, res, next) {
+  if (req.session && req.session.name) {
+    next();
+  } else {
+    res.status(401).json({ message: 'you shall not pass!!' });
+  }
+}
+
 module.exports = {
     restricted,
-    validateFields
+    validateFields,
+    protected
 }

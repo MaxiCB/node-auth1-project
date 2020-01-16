@@ -9,11 +9,12 @@ server.use(express.json());
 
 server.use(
     session({
-        name: 'usersession',
+        name: '',
+        userID: '',
         secret: 'test secret',
         cookie: {
             maxAge: 1 * 24 * 60 * 60 * 1000,
-            secure: true
+            secure: false
         },
         httpOnly: true,
         resave: false,
